@@ -1,0 +1,17 @@
+﻿@model IEnumerable<OglasAutomobila.Data.AspNetUser>
+
+<h1>Korisnici</h1>
+
+<table class="table">
+    <tr>
+        <th> @Html.DisplayNameFor(model => model.UserName)</th>
+    </tr>
+    @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.UserName</td>
+                    <td><a href="@Url.Action("DodajRolu", "Oglasi")">Dodaj rolu korisniku</a></td>
+                </tr>
+            }
+
+</table>

@@ -1,0 +1,72 @@
+﻿
+@model IEnumerable<OglasAutomobila.Data.Oglasi>
+@using OglasAutomobila.Data 
+@{ 
+    AspNetUserRole role = null;
+    OglasiContext context = new();
+    if (User.Identity.Name != null)
+    {
+        string u = User.Identity.Name;
+
+        AspNetUser user = context.AspNetUsers.Single(m => m.UserName == u);
+        try
+        {
+            role = context.AspNetUserRoles.Single(r => r.UserId == user.Id && r.RoleId == 1);
+        }
+        catch (Exception e)
+        {
+           
+        }
+
+
+    }
+}
+
+<h1>Oglasi</h1>
+
+<form method="get" action="@Url.Action("Kreiraj", "Oglasi")">
+    <input class="btn btn-info" type="submit" value="Oglasi se..."/>
+</form>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Marka)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+    </tr>
+    @foreach (Oglasi item in Model)
+    {
+<tr>
+    <td>@Html.DisplayFor(modelItem => item.Naziv)</td>
+    <td>@Html.DisplayFor(modelItem => item.Marka)</td>
+    <td>@Html.DisplayFor(modelItem => item.Model)</td>
+    <td>
+        <a href="@Url.Action("Detalji", "Oglasi", new { id = item.OglasiId })">Detalji</a>
+    </td>
+    @if (role != null)
+    {
+        if (role.RoleId == 1)
+        {
+            <td><a href="@Url.Action("Delete","oglasi", new { id = item.OglasiId})">Ukloni oglas</a></td>
+            <td><a href="@Url.Action("Edit","oglasi", new { id = item.OglasiId})">Promeni sadržaj</a></td>
+        }
+    }
+    else
+    {
+        <td></td>
+    }
+
+</tr>
+     }
+
+
+</table>
+
+
+
+
