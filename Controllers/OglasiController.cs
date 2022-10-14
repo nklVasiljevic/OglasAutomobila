@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using OglasAutomobila.Data;
 using OglasAutomobila.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,16 +17,18 @@ namespace OglasAutomobila.Controllers
     public class OglasiController : Controller
     {
         private readonly OglasiContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly UserManager<AspNetUser> _userManager;
         private readonly SignInManager<AspNetUser> _signInManager;
 
 
         public OglasiController(OglasiContext context, UserManager<AspNetUser> userManager, SignInManager<AspNetUser>
-        signInManager)
+        signInManager,IWebHostEnvironment webHostEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [Authorize(Roles = "admin")]
@@ -155,12 +159,25 @@ namespace OglasAutomobila.Controllers
         [HttpPost]
         public IActionResult Kreiraj(Oglasi oglas)
         {
-           string user = User.Identity.Name;
-            AspNetUser u = _context.AspNetUsers.Single(m => m.UserName==user);
+            Image i = new();
+            string user = User.Identity.Name;
+            AspNetUser u = _context.AspNetUsers.Single(m => m.UserName == user);
             Oglasi o = new();
             OglasiUser ou = new();
+
+            if (oglas.Image != null)
+            {
+                string folder = "Images/";
+                folder += Guid.NewGuid().ToString() + "_" + oglas.Image.ImageFile.FileName; 
+                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                oglas.Image.ImageFile.CopyToAsync(new FileStream (serverFolder, FileMode.Create));
+                i.Title = oglas.Image.ImageFile.FileName;
+                i.ImagePath = serverFolder;
+                _context.Images.Add(i);
+            }
             if (ModelState.IsValid)
             {
+                o.Image = i;
                 o.Godište = oglas.Godište;
                 o.Marka = oglas.Marka;
                 o.Mesto = oglas.Mesto;

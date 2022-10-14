@@ -2,7 +2,7 @@
 
 
 
-<form asp-action="Kreiraj">
+<form asp-action="Kreiraj" enctype="multipart/form-data" method="post">
     <h1>Unesite podatke...</h1>
 
     <div class="form-group">
@@ -67,7 +67,7 @@
         </div>
     </div>
     <br />
-    <input type="file" id="attachmentFile" name="attachmentFile" multiple="" class="btn btn-default" style="font-size: 12px; width: 100%">
+    <input type="file"  asp-for="Image.ImageFile"  class="btn btn-default" style="font-size: 12px; width: 100%">
     <div class="form-group">
         <input class="btn btn-info" style="margin-top:10px;" type="submit" value="Kreiraj" />
     </div>

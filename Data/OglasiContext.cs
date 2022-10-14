@@ -29,6 +29,7 @@ namespace OglasAutomobila.Data
         public virtual DbSet<Mesto> Mestos { get; set; }
         public virtual DbSet<Oglasi> Oglasis { get; set; }
         public virtual DbSet<OglasiUser> OglasiUsers { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -143,6 +144,14 @@ namespace OglasAutomobila.Data
                 entity.Property(e => e.Ulica).HasMaxLength(255);
             });
 
+            modelBuilder.Entity<Image>(entity =>
+            {
+                entity.ToTable("Image");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.ImagePath).HasMaxLength(400);
+                entity.Property(e => e.Title).HasMaxLength(250);
+            });
+
             modelBuilder.Entity<Oglasi>(entity =>
             {
                 entity.ToTable("Oglasi");
@@ -165,6 +174,10 @@ namespace OglasAutomobila.Data
                     .WithMany(p => p.Oglasis)
                     .HasForeignKey(d => d.MestoId)
                     .HasConstraintName("FK__Oglasi__MestoId__534D60F1");
+                entity.HasOne(d => d.Image)
+                .WithMany(p=>p.Oglasis)
+                .HasForeignKey(d=>d.ImageId)
+                .HasConstraintName("ImageId");                
             });
 
             modelBuilder.Entity<OglasiUser>(entity =>

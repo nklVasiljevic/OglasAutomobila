@@ -17,6 +17,7 @@ namespace OglasAutomobila.Data
         public string Naziv { get; set; }
         public string Model { get; set; }
         public string Marka { get; set; }
+        public int? ImageId { get; set; }
         public int? MestoId { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy.}")]
@@ -28,6 +29,7 @@ namespace OglasAutomobila.Data
         public string Opis { get; set; }
 
         public virtual Mesto Mesto { get; set; }
+        public virtual Image Image { get; set; }
         public virtual ICollection<OglasiUser> OglasiUsers { get; set; }
     }
 }
