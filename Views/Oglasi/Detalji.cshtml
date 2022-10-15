@@ -1,6 +1,6 @@
 ﻿@model OglasAutomobila.Data.Oglasi
 @using OglasAutomobila.Data
-@{ 
+@{
     OglasiContext context = new OglasiContext();
     Mesto mesto = context.Mestos.Single(e => e.MestoId == Model.MestoId);
     OglasiUser ou = context.OglasiUsers.Single(e => e.OglasiId == Model.OglasiId);
@@ -8,6 +8,7 @@
     string reg = null;
     string regDo = null;
     string user = null;
+    Image i = context.Images.FirstOrDefault(x => x.Id == Model.ImageId);
     if (Model.Registrovan)
     {
         reg = "Registrovan auto";
@@ -18,47 +19,60 @@
         reg = "Nije registrovan auto";
         regDo = "Neregistrovan";
     }
-    if(ou != null )
+    if (ou != null)
     {
-        u = context.AspNetUsers.Single(e=> e.Id==ou.UserId);
-         user = u.UserName;
+        u = context.AspNetUsers.Single(e => e.Id == ou.UserId);
+        user = u.UserName;
     }
     else
     {
-        user =" ";
+        user = " ";
     }
 
 }
 <h1>Detalji</h1>
 
-<hr/>
+<hr />
 
 <table class="table">
 
     <tr>
-        <th>@Html.DisplayNameFor(model => model.Mesto):</th><td>@mesto.Opština @mesto.Grad</td>
+        <th>@Html.DisplayNameFor(model => model.Mesto):</th>
+        <td>@mesto.Opština @mesto.Grad</td>
     </tr>
     <tr>
-        <th>Naslov:</th><td>@Model.Naziv</td> 
+        <th>Naslov:</th>
+        <td>@Model.Naziv</td>
     </tr>
     <tr>
-        <th>@Html.DisplayNameFor(model => model.Registrovan):</th><td>@reg</td>
+        <th>@Html.DisplayNameFor(model => model.Registrovan):</th>
+        <td>@reg</td>
     </tr>
     <tr>
-        <th>Datum isteka registracije:</th><td>@regDo</td>
+        <th>Datum isteka registracije:</th>
+        <td>@regDo</td>
     </tr>
     <tr>
-        <th>@Html.DisplayNameFor(model => model.Godište):</th><td>@Model.Godište</td>
+        <th>@Html.DisplayNameFor(model => model.Godište):</th>
+        <td>@Model.Godište</td>
     </tr>
     <tr>
-        <th>Marka automobila:</th><td>@Model.Marka</td>
+        <th>Marka automobila:</th>
+        <td>@Model.Marka</td>
     </tr>
     <tr>
-        <th>Model automobila:</th><td>@Model.Model</td>
+        <th>Model automobila:</th>
+        <td>@Model.Model</td>
     </tr>
     <tr>
-        <th>Opis vozila:</th><td>@Model.Opis</td>
+        <th>Opis vozila:</th>
+        <td>@Model.Opis</td>
     </tr>
 </table>
+@if (i != null)
+{
+    <img src="@i.ImagePath" class="img-thumbnail" />
+}
+
 <h2>@user</h2>
 <a href="/" class="btn btn-dark" style="margin-top:60px;">Nazad</a>

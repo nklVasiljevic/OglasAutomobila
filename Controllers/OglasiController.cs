@@ -172,7 +172,7 @@ namespace OglasAutomobila.Controllers
                 string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
                 oglas.Image.ImageFile.CopyToAsync(new FileStream (serverFolder, FileMode.Create));
                 i.Title = oglas.Image.ImageFile.FileName;
-                i.ImagePath = serverFolder;
+                i.ImagePath = "/"+folder;
                 _context.Images.Add(i);
             }
             if (ModelState.IsValid)

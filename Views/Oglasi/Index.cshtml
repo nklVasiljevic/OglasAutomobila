@@ -7,7 +7,7 @@
     if (User.Identity.Name != null)
     {
         string u = User.Identity.Name;
-
+        
         AspNetUser user = context.AspNetUsers.Single(m => m.UserName == u);
         try
         {
@@ -27,6 +27,35 @@
 <form method="get" action="@Url.Action("Kreiraj", "Oglasi")">
     <input class="btn btn-info" type="submit" value="Oglasi se..."/>
 </form>
+
+<div class="container">
+    <h3 class="display-4">Svi oglasi</h3>
+    <div class="row">
+        @foreach(var oglas in Model)
+        {
+            var img = context.Images.FirstOrDefault(x => x.Id == oglas.ImageId);
+            var ou = context.OglasiUsers.FirstOrDefault(x => x.OglasiId == oglas.OglasiId);
+            var u = context.AspNetUsers.FirstOrDefault(x => x.Id == ou.UserId);
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        @if (img != null)
+                        {
+                        <img src="@img.ImagePath" class="img-thumbnail" />
+                }
+                        <div class="card-body">
+                            <h3 class="card-title">@oglas.Naziv</h3>
+                            <p class="card-text">@oglas.Opis</p>
+                            <div class="btn-group">
+                                <a href="@Url.Action("Detalji", "Oglasi", new { id = oglas.OglasiId })" class="btn btn-sm btn-outline-secondary">Detalji</a>
+                            </div>
+                            <small class="text-muted">@u.UserName</small>
+                        </div>
+
+                    </div>
+                </div>
+            }
+    </div>
+</div>
 <table class="table">
     <tr>
         <th>
