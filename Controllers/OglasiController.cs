@@ -88,6 +88,7 @@ namespace OglasAutomobila.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var oglasi = await _context.Oglasis.FindAsync(id);
+            var oglasiUser = _context.OglasiUsers.FirstOrDefault(x => x.OglasiId == id);
             if (oglasi == null)
             {
                 return RedirectToAction(nameof(Index));
@@ -96,10 +97,11 @@ namespace OglasAutomobila.Controllers
             try
             {
                 _context.Oglasis.Remove(oglasi);
+                _context.OglasiUsers.Remove(oglasiUser);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateException /* ex */)
+            catch (Exception ex)
             {
                 //Log the error (uncomment ex variable name and write a log.)
                 return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });

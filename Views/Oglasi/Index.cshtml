@@ -21,15 +21,15 @@
 
     }
 }
+<h3 class="display-4 text-center">Oglasi polovnih automobila</h3>
 
-<h1>Oglasi</h1>
 
-<form method="get" action="@Url.Action("Kreiraj", "Oglasi")">
-    <input class="btn btn-info" type="submit" value="Oglasi se..."/>
+<form method="get" action="@Url.Action("Kreiraj", "Oglasi")" class="text-center" style="margin-bottom: 10px">
+    <input class="btn btn-info" type="submit" value="Oglasi auto za prodaju"/>
 </form>
 
 <div class="container">
-    <h3 class="display-4">Svi oglasi</h3>
+    
     <div class="row">
         @foreach(var oglas in Model)
         {
@@ -40,13 +40,21 @@
                     <div class="card mb-4 shadow-sm">
                         @if (img != null)
                         {
-                        <img src="@img.ImagePath" class="img-thumbnail" />
+                        <img style="height:300px"src="@img.ImagePath" class="img-thumbnail" />
                 }
                         <div class="card-body">
                             <h3 class="card-title">@oglas.Naziv</h3>
                             <p class="card-text">@oglas.Opis</p>
                             <div class="btn-group">
                                 <a href="@Url.Action("Detalji", "Oglasi", new { id = oglas.OglasiId })" class="btn btn-sm btn-outline-secondary">Detalji</a>
+                                @if (role != null)
+                                {
+                                    if (role.RoleId == 1)
+                                    {
+                                        <a href="@Url.Action("Delete","oglasi", new { id = oglas.OglasiId})" class="btn btn-sm btn-outline-secondary">Obriši</a>
+                                        <a href="@Url.Action("Edit","oglasi", new { id = oglas.OglasiId})" class="btn btn-sm btn-outline-secondary">Promeni sadržaj</a>
+                                    }
+                                }
                             </div>
                             <small class="text-muted">@u.UserName</small>
                         </div>
@@ -56,45 +64,6 @@
             }
     </div>
 </div>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Naziv)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Marka)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Model)
-        </th>
-    </tr>
-    @foreach (Oglasi item in Model)
-    {
-<tr>
-    <td>@Html.DisplayFor(modelItem => item.Naziv)</td>
-    <td>@Html.DisplayFor(modelItem => item.Marka)</td>
-    <td>@Html.DisplayFor(modelItem => item.Model)</td>
-    <td>
-        <a href="@Url.Action("Detalji", "Oglasi", new { id = item.OglasiId })">Detalji</a>
-    </td>
-    @if (role != null)
-    {
-        if (role.RoleId == 1)
-        {
-            <td><a href="@Url.Action("Delete","oglasi", new { id = item.OglasiId})">Ukloni oglas</a></td>
-            <td><a href="@Url.Action("Edit","oglasi", new { id = item.OglasiId})">Promeni sadržaj</a></td>
-        }
-    }
-    else
-    {
-        <td></td>
-    }
-
-</tr>
-     }
-
-
-</table>
 
 
 
