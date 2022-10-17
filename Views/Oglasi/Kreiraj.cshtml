@@ -7,72 +7,84 @@
 
     <div class="form-group">
         <label class="col-form-label">Naziv oglasa</label>
-        @Html.TextBoxFor(x => x.Naziv, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Naziv)
-    </div>
-    <br />
-    <div class="form-group">
-        <label class="col-form-label">Godište</label>
         <div class="col-sm-5">
-            @Html.EditorFor(d => d.Godište, new { htmlAttributes = new { @class = "datepicker" } })
-            @Html.ValidationMessageFor(x => x.Godište)
+            @Html.TextBoxFor(x => x.Naziv, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Naziv)
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-form-label">Grad</label>
-        @Html.TextBoxFor(x => x.Mesto.Grad, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Mesto.Grad)
-    </div>
-    <br />
-
-    <div class="form-group">
-        <label class="col-form-label"> Opština</label>
-        @Html.TextBoxFor(x => x.Mesto.Opština, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Mesto.Opština)
-    </div><br />
-    <div class="form-group">
-        <label class="col-form-label">Marka</label>
-        @Html.TextBoxFor(x => x.Marka, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Marka)
-    </div>
-    <br />
-
-
-    <div class="form-group">
-        <label class="col-form-label">Model automobila</label>
-        @Html.TextBoxFor(x => x.Model, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Model)
-    </div>
-    <br />
-
-
-    <div class="form-group">
-        <label class="col-md-3 control-label">Registrovan</label>
-        <div class="col-sm-5" id="r">
-            @Html.CheckBoxFor(x => x.Registrovan, new { @checked = false })<br />
+        <br />
+        <div class="form-group">
+            <label class="col-form-label">Godište</label>
+            <div class="col-sm-5">
+                @Html.EditorFor(d => d.Godište, new { htmlAttributes = new { @class = "datepicker" } })
+                @Html.ValidationMessageFor(x => x.Godište)
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-form-label">Registrovan do datuma</label>
-        <div class="col-sm-5">
-            @Html.EditorFor(d => d.RegistrovanDo, new { htmlAttributes = new { @class = "datepicker" } })
-            @Html.ValidationMessageFor(x => x.RegistrovanDo)
+        <div class="form-group">
+            <label class="col-form-label">Grad</label>
+            <div class="col-sm-5">
+                @Html.TextBoxFor(x => x.Mesto.Grad, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Mesto.Grad)
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-form-label">Detaljan opis</label>
-        <div class="col-sm-5">
-            @Html.TextBoxFor(x => x.Opis, new { @class = "form-control" })
-            @Html.ValidationMessageFor(x => x.Opis)
+        <br />
+
+        <div class="form-group">
+            <label class="col-form-label"> Opština</label>
+            <div class="col-sm-5">
+                @Html.TextBoxFor(x => x.Mesto.Opština, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Mesto.Opština)
+            </div>
+        </div><br />
+        <div class="form-group">
+            <label class="col-form-label">Marka</label>
+            <div class="col-sm-5">
+                @Html.TextBoxFor(x => x.Marka, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Marka)
+            </div>
         </div>
-    </div>
-    <br />
-    <input type="file"  asp-for="Image.ImageFile"  class="btn btn-default" style="font-size: 12px; width: 100%">
-    <div class="form-group">
-        <input class="btn btn-info" style="margin-top:10px;" type="submit" value="Kreiraj" />
-    </div>
-    <br />
-    <a href="/" class="btn btn-dark" style="margin-top:60px;">Nazad</a>
+        <br />
+
+
+        <div class="form-group">
+            <label class="col-form-label">Model automobila</label>
+            <div class="col-sm-5">
+                @Html.TextBoxFor(x => x.Model, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Model)
+            </div>
+        </div>
+        <br />
+
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">Registrovan</label>
+            <div class="col-sm-5" id="r">
+                @Html.CheckBoxFor(x => x.Registrovan, new { @checked = false })<br />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Registrovan do datuma</label>
+            <div class="col-sm-5">
+                @Html.EditorFor(d => d.RegistrovanDo, new { htmlAttributes = new { @class = "datepicker" } })
+                @Html.ValidationMessageFor(x => x.RegistrovanDo)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Detaljan opis</label>            
+                @Html.TextBoxFor(x => x.Opis, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Opis)           
+        </div>
+        <br />
+        <div class="form-group">
+            <label class="col-form-label">Dodajte sliku</label>
+            <input type="file" asp-for="Image.ImageFile" value="Dodajte sliku" class="btn btn-outline-secondary" style="font-size: 12px; width: 25%">
+        </div>
+        <div class="form-group">
+            <input class="btn btn-info" style="margin-top:10px;" type="submit" value="Kreiraj" />
+            <a href="/" class="btn btn-dark float-right">Nazad</a>
+        </div>
+
+
 
 </form>
 <script src="Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>

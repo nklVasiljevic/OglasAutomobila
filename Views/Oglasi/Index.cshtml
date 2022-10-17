@@ -1,13 +1,13 @@
 ﻿
 @model IEnumerable<OglasAutomobila.Data.Oglasi>
-@using OglasAutomobila.Data 
-@{ 
+@using OglasAutomobila.Data
+@{
     AspNetUserRole role = null;
     OglasiContext context = new();
     if (User.Identity.Name != null)
     {
         string u = User.Identity.Name;
-        
+
         AspNetUser user = context.AspNetUsers.Single(m => m.UserName == u);
         try
         {
@@ -15,54 +15,56 @@
         }
         catch (Exception e)
         {
-           
+
         }
 
 
     }
 }
+
+
 <h3 class="display-4 text-center">Oglasi polovnih automobila</h3>
 
 
 <form method="get" action="@Url.Action("Kreiraj", "Oglasi")" class="text-center" style="margin-bottom: 10px">
-    <input class="btn btn-info" type="submit" value="Oglasi auto za prodaju"/>
+    <input class="btn btn-info" type="submit" value="Oglasi auto za prodaju" />
 </form>
 
-<div class="container">
-    
-    <div class="row">
-        @foreach(var oglas in Model)
-        {
-            var img = context.Images.FirstOrDefault(x => x.Id == oglas.ImageId);
-            var ou = context.OglasiUsers.FirstOrDefault(x => x.OglasiId == oglas.OglasiId);
-            var u = context.AspNetUsers.FirstOrDefault(x => x.Id == ou.UserId);
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        @if (img != null)
-                        {
-                        <img style="height:300px"src="@img.ImagePath" class="img-thumbnail" />
-                }
-                        <div class="card-body">
-                            <h3 class="card-title">@oglas.Naziv</h3>
-                            <p class="card-text">@oglas.Opis</p>
-                            <div class="btn-group">
-                                <a href="@Url.Action("Detalji", "Oglasi", new { id = oglas.OglasiId })" class="btn btn-sm btn-outline-secondary">Detalji</a>
-                                @if (role != null)
-                                {
-                                    if (role.RoleId == 1)
-                                    {
-                                        <a href="@Url.Action("Delete","oglasi", new { id = oglas.OglasiId})" class="btn btn-sm btn-outline-secondary">Obriši</a>
-                                        <a href="@Url.Action("Edit","oglasi", new { id = oglas.OglasiId})" class="btn btn-sm btn-outline-secondary">Promeni sadržaj</a>
-                                    }
-                                }
-                            </div>
-                            <small class="text-muted">@u.UserName</small>
-                        </div>
+<div class="container" >
 
+      <div class="row">
+            @foreach(var oglas in Model)
+            {
+                var img = context.Images.FirstOrDefault(x => x.Id == oglas.ImageId);
+                var ou = context.OglasiUsers.FirstOrDefault(x => x.OglasiId == oglas.OglasiId);
+                var u = context.AspNetUsers.FirstOrDefault(x => x.Id == ou.UserId);
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            @if (img != null)
+                            {
+                            <img style="height:300px"src="@img.ImagePath" class="img-thumbnail" />
+                    }
+                            <div class="card-body">
+                                <h3 class="card-title">@oglas.Naziv</h3>
+                                <p class="card-text">@oglas.Opis</p>
+                                <div class="btn-group">
+                                    <a href="@Url.Action("Detalji", "Oglasi", new { id = oglas.OglasiId })" class="btn btn-sm btn-outline-secondary">Detalji</a>
+                                    @if (role != null)
+                                    {
+                                        if (role.RoleId == 1)
+                                        {
+                                            <a href="@Url.Action("Delete","oglasi", new { id = oglas.OglasiId})" class="btn btn-sm btn-outline-secondary">Obriši</a>
+                                            <a href="@Url.Action("Edit","oglasi", new { id = oglas.OglasiId})" class="btn btn-sm btn-outline-secondary">Promeni sadržaj</a>
+                                        }
+                                    }
+                                </div>
+                                <small class="text-muted">@u.UserName</small>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-            }
-    </div>
+                }
+        </div>
 </div>
 
 
