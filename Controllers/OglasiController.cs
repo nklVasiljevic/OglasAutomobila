@@ -45,10 +45,22 @@ namespace OglasAutomobila.Controllers
         }
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Edit (Oglasi oglasi)
+        public IActionResult Edit (Oglasi oglasi)
         {
+            Image i = new();
+            if(oglasi.Image != null)
+            {
+                string folder = "Images/";
+                folder += Guid.NewGuid().ToString() + "_" + oglasi.Image.ImageFile.FileName;
+                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                oglasi.Image.ImageFile.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                i.Title = oglasi.Image.ImageFile.FileName;
+                i.ImagePath = "/" + folder;
+                _context.Images.Add(i);
+            }    
             if (ModelState.IsValid)
             {
+                oglasi.Image = i;
                 _context.Entry(oglasi).State = EntityState.Modified;
                 _context.SaveChanges();
                 return RedirectToAction("Index");
